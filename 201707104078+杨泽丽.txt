@@ -1,0 +1,169 @@
+Microsoft Windows [版本 10.0.17134.345]
+(c) 2018 Microsoft Corporation。保留所有权利。
+
+C:\WINDOWS\system32>net start mysql80
+请求的服务已经启动。
+
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\WINDOWS\system32>mysql -u root -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 39
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database shopping charset=utf8;
+Query OK, 1 row affected, 1 warning (0.04 sec)
+
+mysql> use shopping;
+Database changed
+mysql> create table shopping (id int auto_increment primary key,
+    -> name varchar(10),
+    -> num varchar(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql>  create table shopping (id int auto_increment primary key,
+    ->     -> name varchar(10),
+    ->     -> num varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> name varchar(10),
+    -> num varchar(10))' at line 2
+mysql> cyeate table shopping (id int auto_increment primary key,
+    -> name varchar(10),
+    -> num varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cyeate table shopping (id int auto_increment primary key,
+name varchar(10),
+num ' at line 1
+mysql> create table shopping (id int auto_increment primary key,
+    -> name varchar(10),
+    -> num varchar(10));
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> desc shopping;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(10) | YES  |     | NULL    |                |
+| num   | varchar(10) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.03 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_shopping |
++--------------------+
+| shopping           |
++--------------------+
+1 row in set (0.02 sec)
+
+mysql> alter table shopping add price varchar(4);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc shopping;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(10) | YES  |     | NULL    |                |
+| num   | varchar(10) | YES  |     | NULL    |                |
+| price | varchar(4)  | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table shopping add enjoy  varchar(10);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table shopping add discount varchar(10);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table shopping add wishes varchar(10);
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into shopping (id,name,num,price) values
+    -> (1,'yzl',10,'600');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from shopping;
++----+------+------+-------+-------+----------+--------+
+| id | name | num  | price | enjoy | discount | wishes |
++----+------+------+-------+-------+----------+--------+
+|  1 | yzl  | 10   | 600   | NULL  | NULL     | NULL   |
++----+------+------+-------+-------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into shopping (id,name,num,price) values
+    -> (2,'hjn',4,'1000')，（3，’lxy',1,300）;
+    '>
+    '> ;
+    '> (2,'hjn',4,'1000')，（3，’lxy',1,300）;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '，（3，’lxy',1,300）;
+
+;
+(2,'hjn',4,'1000')，（3，’lxy',1,300）' at line 2
+mysql> insert into shopping (id,name,num,price) values
+    -> (2,'hjn',4,'1000'),(3,'lxy',1,'300');
+Query OK, 2 rows affected (0.10 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from shopping;
++----+------+------+-------+-------+----------+--------+
+| id | name | num  | price | enjoy | discount | wishes |
++----+------+------+-------+-------+----------+--------+
+|  1 | yzl  | 10   | 600   | NULL  | NULL     | NULL   |
+|  2 | hjn  | 4    | 1000  | NULL  | NULL     | NULL   |
+|  3 | lxy  | 1    | 300   | NULL  | NULL     | NULL   |
++----+------+------+-------+-------+----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> update shopping set enjoy='clothes',discount='yes',wishes='happy'where
+    -> id=1;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shopping;
++----+------+------+-------+---------+----------+--------+
+| id | name | num  | price | enjoy   | discount | wishes |
++----+------+------+-------+---------+----------+--------+
+|  1 | yzl  | 10   | 600   | clothes | yes      | happy  |
+|  2 | hjn  | 4    | 1000  | NULL    | NULL     | NULL   |
+|  3 | lxy  | 1    | 300   | NULL    | NULL     | NULL   |
++----+------+------+-------+---------+----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> update shopping set enjoy='huazhuangpin,shoes,clothes',discount='no',
+    -> wishes='rich'where id=2;
+ERROR 1406 (22001): Data too long for column 'enjoy' at row 1
+mysql> update shopping set enjoy='huazhuangoin',discount='no',
+    -> wishes='rich' where id=2;
+ERROR 1406 (22001): Data too long for column 'enjoy' at row 1
+mysql> update shopping set enjoy='socks',discount='no',
+    -> wishes='richer' where id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update shopping set enjoy='kouhong',discount='no',
+    -> wishes='thinner' where id=3;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shopping;
++----+------+------+-------+---------+----------+---------+
+| id | name | num  | price | enjoy   | discount | wishes  |
++----+------+------+-------+---------+----------+---------+
+|  1 | yzl  | 10   | 600   | clothes | yes      | happy   |
+|  2 | hjn  | 4    | 1000  | socks   | no       | richer  |
+|  3 | lxy  | 1    | 300   | kouhong | no       | thinner |
++----+------+------+-------+---------+----------+---------+
+3 rows in set (0.00 sec)
