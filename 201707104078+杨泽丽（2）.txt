@@ -1,0 +1,652 @@
+Microsoft Windows [版本 10.0.17134.345]
+(c) 2018 Microsoft Corporation。保留所有权利。
+
+C:\WINDOWS\system32>net start mysql80
+请求的服务已经启动。
+
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\WINDOWS\system32>mysql -u root -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 72
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use shopping;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_shopping |
++--------------------+
+| countries          |
+| departments        |
+| dept               |
+| emp                |
+| employees          |
+| job_history        |
+| jobs               |
+| locations          |
+| regions            |
+| salgrade           |
+| shopping           |
++--------------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from countries;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| AR         | Argentina                | 2         |
+| AU         | Australia                | 3         |
+| BE         | Belgium                  | 1         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| CH         | Switzerland              | 1         |
+| CN         | China                    | 3         |
+| DE         | Germany                  | 1         |
+| DK         | Denmark                  | 1         |
+| EG         | Egypt                    | 4         |
+| FR         | France                   | 1         |
+| IL         | Israel                   | 4         |
+| IN         | India                    | 3         |
+| IT         | Italy                    | 1         |
+| JP         | Japan                    | 3         |
+| KW         | Kuwait                   | 4         |
+| ML         | Malaysia                 | 3         |
+| MX         | Mexico                   | 2         |
+| NG         | Nigeria                  | 4         |
+| NL         | Netherlands              | 1         |
+| SG         | Singapore                | 3         |
+| UK         | United Kingdom           | 1         |
+| US         | United States of America | 2         |
+| ZM         | Zambia                   | 4         |
+| ZW         | Zimbabwe                 | 4         |
++------------+--------------------------+-----------+
+25 rows in set (0.00 sec)
+
+mysql> select distinct COUNTRY_ID from countries;
++------------+
+| COUNTRY_ID |
++------------+
+| AR         |
+| AU         |
+| BE         |
+| BR         |
+| CA         |
+| CH         |
+| CN         |
+| DE         |
+| DK         |
+| EG         |
+| FR         |
+| IL         |
+| IN         |
+| IT         |
+| JP         |
+| KW         |
+| ML         |
+| MX         |
+| NG         |
+| NL         |
+| SG         |
+| UK         |
+| US         |
+| ZM         |
+| ZW         |
++------------+
+25 rows in set (0.00 sec)
+
+mysql> select * from countries where REGION_ID<3;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| AR         | Argentina                | 2         |
+| BE         | Belgium                  | 1         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| CH         | Switzerland              | 1         |
+| DE         | Germany                  | 1         |
+| DK         | Denmark                  | 1         |
+| FR         | France                   | 1         |
+| IT         | Italy                    | 1         |
+| MX         | Mexico                   | 2         |
+| NL         | Netherlands              | 1         |
+| UK         | United Kingdom           | 1         |
+| US         | United States of America | 2         |
++------------+--------------------------+-----------+
+13 rows in set (0.00 sec)
+
+mysql> select * from countries order by sal;
+ERROR 1054 (42S22): Unknown column 'sal' in 'order clause'
+mysql> select * from countries order by REGION_ID;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| BE         | Belgium                  | 1         |
+| CH         | Switzerland              | 1         |
+| DE         | Germany                  | 1         |
+| DK         | Denmark                  | 1         |
+| FR         | France                   | 1         |
+| IT         | Italy                    | 1         |
+| NL         | Netherlands              | 1         |
+| UK         | United Kingdom           | 1         |
+| AR         | Argentina                | 2         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| MX         | Mexico                   | 2         |
+| US         | United States of America | 2         |
+| AU         | Australia                | 3         |
+| CN         | China                    | 3         |
+| IN         | India                    | 3         |
+| JP         | Japan                    | 3         |
+| ML         | Malaysia                 | 3         |
+| SG         | Singapore                | 3         |
+| EG         | Egypt                    | 4         |
+| IL         | Israel                   | 4         |
+| KW         | Kuwait                   | 4         |
+| NG         | Nigeria                  | 4         |
+| ZM         | Zambia                   | 4         |
+| ZW         | Zimbabwe                 | 4         |
++------------+--------------------------+-----------+
+25 rows in set (0.00 sec)
+
+mysql> select * from countries where REGION_ID<3 order by REGION_ID;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| BE         | Belgium                  | 1         |
+| CH         | Switzerland              | 1         |
+| DE         | Germany                  | 1         |
+| DK         | Denmark                  | 1         |
+| FR         | France                   | 1         |
+| IT         | Italy                    | 1         |
+| NL         | Netherlands              | 1         |
+| UK         | United Kingdom           | 1         |
+| AR         | Argentina                | 2         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| MX         | Mexico                   | 2         |
+| US         | United States of America | 2         |
++------------+--------------------------+-----------+
+13 rows in set (0.00 sec)
+
+mysql> select * from countries where REGION_ID<3 order by REGION_ID desc;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| AR         | Argentina                | 2         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| MX         | Mexico                   | 2         |
+| US         | United States of America | 2         |
+| BE         | Belgium                  | 1         |
+| CH         | Switzerland              | 1         |
+| DE         | Germany                  | 1         |
+| DK         | Denmark                  | 1         |
+| FR         | France                   | 1         |
+| IT         | Italy                    | 1         |
+| NL         | Netherlands              | 1         |
+| UK         | United Kingdom           | 1         |
++------------+--------------------------+-----------+
+13 rows in set (0.00 sec)
+
+mysql> select * from countries order by limit 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit 2' at line 1
+mysql> select * from countries order by REGION_ID limit 2;
++------------+--------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME | REGION_ID |
++------------+--------------+-----------+
+| CH         | Switzerland  | 1         |
+| BE         | Belgium      | 1         |
++------------+--------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from countries where REGION_ID<3 order by REGION_ID limit 3;
++------------+--------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME | REGION_ID |
++------------+--------------+-----------+
+| BE         | Belgium      | 1         |
+| DE         | Germany      | 1         |
+| CH         | Switzerland  | 1         |
++------------+--------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from countries where REGION_ID<3 order by REGION_ID limit 4,3;
++------------+--------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME | REGION_ID |
++------------+--------------+-----------+
+| DE         | Germany      | 1         |
+| DK         | Denmark      | 1         |
+| FR         | France       | 1         |
++------------+--------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select sum(REGION_ID);
+ERROR 1054 (42S22): Unknown column 'REGION_ID' in 'field list'
+mysql> select sum(REGION_ID) from countries;
++----------------+
+| sum(REGION_ID) |
++----------------+
+|             60 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select max(REGION_ID) where REGION_ID>3  from countries;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from countries' at line 1
+mysql> select max(REGION_ID) where REGION_ID>3 from countries;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from countries' at line 1
+mysql> select max(REGION_ID) from countries;
++----------------+
+| max(REGION_ID) |
++----------------+
+| 4              |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select max(REGION_ID) where REGION_ID>2 from countries;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from countries' at line 1
+mysql> select max(REGION_ID) where REGION_ID>2 from REGION_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from REGION_ID' at line 1
+mysql> select max(REGION_ID) where REGION_ID>2 from countries;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from countries' at line 1
+mysql> select REGION_ID ,sum(REGION_ID) from countries group by REGION_ID;
++-----------+----------------+
+| REGION_ID | sum(REGION_ID) |
++-----------+----------------+
+| 2         |             10 |
+| 3         |             18 |
+| 1         |              8 |
+| 4         |             24 |
++-----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(*) from countries;
++----------+
+| count(*) |
++----------+
+|       25 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select REGION_ID, count(REGION) from countries;
+ERROR 1054 (42S22): Unknown column 'REGION' in 'field list'
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> ;
+ERROR:
+No query specified
+
+mysql> select REGION_ID,count(REGION_ID) from countries where REGION_ID>1 group by REGION_ID;
++-----------+------------------+
+| REGION_ID | count(REGION_ID) |
++-----------+------------------+
+| 2         |                5 |
+| 3         |                6 |
+| 4         |                6 |
++-----------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from shopping;
++----+------+------+-------+---------+----------+---------+
+| id | name | num  | price | enjoy   | discount | wishes  |
++----+------+------+-------+---------+----------+---------+
+|  1 | yzl  | 10   | 600   | clothes | yes      | happy   |
+|  2 | hjn  | 4    | 1000  | socks   | no       | richer  |
+|  3 | lxy  | 1    | 300   | kouhong | no       | thinner |
++----+------+------+-------+---------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> alter table countries (id int auto_increment primary key
+    -> num varchar(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id int auto_increment primary key
+num varchar(10)' at line 1
+mysql> alter table countries (id int auto_increment primary key
+    -> num varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id int auto_increment primary key
+num varchar(10))' at line 1
+mysql> alter table countries (id int auto_increment primary key,
+    -> num varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id int auto_increment primary key,
+num varchar(10))' at line 1
+mysql> alter table countries (id int auto_increment primary key,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id int auto_increment primary key,
+)' at line 1
+mysql> alter table countries add num varchar(10);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from countries;
++------------+--------------------------+-----------+------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID | num  |
++------------+--------------------------+-----------+------+
+| AR         | Argentina                | 2         | NULL |
+| AU         | Australia                | 3         | NULL |
+| BE         | Belgium                  | 1         | NULL |
+| BR         | Brazil                   | 2         | NULL |
+| CA         | Canada                   | 2         | NULL |
+| CH         | Switzerland              | 1         | NULL |
+| CN         | China                    | 3         | NULL |
+| DE         | Germany                  | 1         | NULL |
+| DK         | Denmark                  | 1         | NULL |
+| EG         | Egypt                    | 4         | NULL |
+| FR         | France                   | 1         | NULL |
+| IL         | Israel                   | 4         | NULL |
+| IN         | India                    | 3         | NULL |
+| IT         | Italy                    | 1         | NULL |
+| JP         | Japan                    | 3         | NULL |
+| KW         | Kuwait                   | 4         | NULL |
+| ML         | Malaysia                 | 3         | NULL |
+| MX         | Mexico                   | 2         | NULL |
+| NG         | Nigeria                  | 4         | NULL |
+| NL         | Netherlands              | 1         | NULL |
+| SG         | Singapore                | 3         | NULL |
+| UK         | United Kingdom           | 1         | NULL |
+| US         | United States of America | 2         | NULL |
+| ZM         | Zambia                   | 4         | NULL |
+| ZW         | Zimbabwe                 | 4         | NULL |
++------------+--------------------------+-----------+------+
+25 rows in set (0.00 sec)
+
+mysql> alter table countries add isok int(1) default 0;
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table shopping add isok int(1) default 0;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from shopping;
++----+------+------+-------+---------+----------+---------+------+
+| id | name | num  | price | enjoy   | discount | wishes  | isok |
++----+------+------+-------+---------+----------+---------+------+
+|  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+|  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+|  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
++----+------+------+-------+---------+----------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from countries;
++------------+--------------------------+-----------+------+------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID | num  | isok |
++------------+--------------------------+-----------+------+------+
+| AR         | Argentina                | 2         | NULL |    0 |
+| AU         | Australia                | 3         | NULL |    0 |
+| BE         | Belgium                  | 1         | NULL |    0 |
+| BR         | Brazil                   | 2         | NULL |    0 |
+| CA         | Canada                   | 2         | NULL |    0 |
+| CH         | Switzerland              | 1         | NULL |    0 |
+| CN         | China                    | 3         | NULL |    0 |
+| DE         | Germany                  | 1         | NULL |    0 |
+| DK         | Denmark                  | 1         | NULL |    0 |
+| EG         | Egypt                    | 4         | NULL |    0 |
+| FR         | France                   | 1         | NULL |    0 |
+| IL         | Israel                   | 4         | NULL |    0 |
+| IN         | India                    | 3         | NULL |    0 |
+| IT         | Italy                    | 1         | NULL |    0 |
+| JP         | Japan                    | 3         | NULL |    0 |
+| KW         | Kuwait                   | 4         | NULL |    0 |
+| ML         | Malaysia                 | 3         | NULL |    0 |
+| MX         | Mexico                   | 2         | NULL |    0 |
+| NG         | Nigeria                  | 4         | NULL |    0 |
+| NL         | Netherlands              | 1         | NULL |    0 |
+| SG         | Singapore                | 3         | NULL |    0 |
+| UK         | United Kingdom           | 1         | NULL |    0 |
+| US         | United States of America | 2         | NULL |    0 |
+| ZM         | Zambia                   | 4         | NULL |    0 |
+| ZW         | Zimbabwe                 | 4         | NULL |    0 |
++------------+--------------------------+-----------+------+------+
+25 rows in set (0.00 sec)
+
+mysql> select * from countries,shopping
+    -> where countries . isok=shopping . isok;
++------------+--------------------------+-----------+------+------+----+------+------+-------+---------+----------+---------+------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID | num  | isok | id | name | num  | price | enjoy   | discount | wishes  | isok |
++------------+--------------------------+-----------+------+------+----+------+------+-------+---------+----------+---------+------+
+| AR         | Argentina                | 2         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| AR         | Argentina                | 2         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| AR         | Argentina                | 2         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| AU         | Australia                | 3         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| AU         | Australia                | 3         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| AU         | Australia                | 3         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| BE         | Belgium                  | 1         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| BE         | Belgium                  | 1         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| BE         | Belgium                  | 1         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| BR         | Brazil                   | 2         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| BR         | Brazil                   | 2         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| BR         | Brazil                   | 2         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| CA         | Canada                   | 2         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| CA         | Canada                   | 2         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| CA         | Canada                   | 2         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| CH         | Switzerland              | 1         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| CH         | Switzerland              | 1         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| CH         | Switzerland              | 1         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| CN         | China                    | 3         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| CN         | China                    | 3         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| CN         | China                    | 3         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| DE         | Germany                  | 1         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| DE         | Germany                  | 1         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| DE         | Germany                  | 1         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| DK         | Denmark                  | 1         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| DK         | Denmark                  | 1         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| DK         | Denmark                  | 1         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| EG         | Egypt                    | 4         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| EG         | Egypt                    | 4         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| EG         | Egypt                    | 4         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| FR         | France                   | 1         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| FR         | France                   | 1         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| FR         | France                   | 1         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| IL         | Israel                   | 4         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| IL         | Israel                   | 4         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| IL         | Israel                   | 4         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| IN         | India                    | 3         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| IN         | India                    | 3         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| IN         | India                    | 3         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| IT         | Italy                    | 1         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| IT         | Italy                    | 1         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| IT         | Italy                    | 1         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| JP         | Japan                    | 3         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| JP         | Japan                    | 3         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| JP         | Japan                    | 3         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| KW         | Kuwait                   | 4         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| KW         | Kuwait                   | 4         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| KW         | Kuwait                   | 4         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| ML         | Malaysia                 | 3         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| ML         | Malaysia                 | 3         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| ML         | Malaysia                 | 3         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| MX         | Mexico                   | 2         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| MX         | Mexico                   | 2         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| MX         | Mexico                   | 2         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| NG         | Nigeria                  | 4         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| NG         | Nigeria                  | 4         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| NG         | Nigeria                  | 4         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| NL         | Netherlands              | 1         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| NL         | Netherlands              | 1         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| NL         | Netherlands              | 1         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| SG         | Singapore                | 3         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| SG         | Singapore                | 3         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| SG         | Singapore                | 3         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| UK         | United Kingdom           | 1         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| UK         | United Kingdom           | 1         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| UK         | United Kingdom           | 1         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| US         | United States of America | 2         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| US         | United States of America | 2         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| US         | United States of America | 2         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| ZM         | Zambia                   | 4         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| ZM         | Zambia                   | 4         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| ZM         | Zambia                   | 4         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| ZW         | Zimbabwe                 | 4         | NULL |    0 |  1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| ZW         | Zimbabwe                 | 4         | NULL |    0 |  2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| ZW         | Zimbabwe                 | 4         | NULL |    0 |  3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
++------------+--------------------------+-----------+------+------+----+------+------+-------+---------+----------+---------+------+
+75 rows in set (0.00 sec)
+
+mysql> select * from countries left join shopping on countries. isok=shopping. isok;
++------------+--------------------------+-----------+------+------+------+------+------+-------+---------+----------+---------+------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID | num  | isok | id   | name | num  | price | enjoy   | discount | wishes  | isok |
++------------+--------------------------+-----------+------+------+------+------+------+-------+---------+----------+---------+------+
+| AR         | Argentina                | 2         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| AU         | Australia                | 3         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| BE         | Belgium                  | 1         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| BR         | Brazil                   | 2         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| CA         | Canada                   | 2         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| CH         | Switzerland              | 1         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| CN         | China                    | 3         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| DE         | Germany                  | 1         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| DK         | Denmark                  | 1         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| EG         | Egypt                    | 4         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| FR         | France                   | 1         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| IL         | Israel                   | 4         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| IN         | India                    | 3         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| IT         | Italy                    | 1         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| JP         | Japan                    | 3         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| KW         | Kuwait                   | 4         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| ML         | Malaysia                 | 3         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| MX         | Mexico                   | 2         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| NG         | Nigeria                  | 4         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| NL         | Netherlands              | 1         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| SG         | Singapore                | 3         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| UK         | United Kingdom           | 1         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| US         | United States of America | 2         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| ZM         | Zambia                   | 4         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| ZW         | Zimbabwe                 | 4         | NULL |    0 |    1 | yzl  | 10   | 600   | clothes | yes      | happy   |    0 |
+| AR         | Argentina                | 2         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| AU         | Australia                | 3         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| BE         | Belgium                  | 1         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| BR         | Brazil                   | 2         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| CA         | Canada                   | 2         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| CH         | Switzerland              | 1         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| CN         | China                    | 3         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| DE         | Germany                  | 1         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| DK         | Denmark                  | 1         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| EG         | Egypt                    | 4         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| FR         | France                   | 1         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| IL         | Israel                   | 4         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| IN         | India                    | 3         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| IT         | Italy                    | 1         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| JP         | Japan                    | 3         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| KW         | Kuwait                   | 4         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| ML         | Malaysia                 | 3         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| MX         | Mexico                   | 2         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| NG         | Nigeria                  | 4         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| NL         | Netherlands              | 1         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| SG         | Singapore                | 3         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| UK         | United Kingdom           | 1         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| US         | United States of America | 2         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| ZM         | Zambia                   | 4         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| ZW         | Zimbabwe                 | 4         | NULL |    0 |    2 | hjn  | 4    | 1000  | socks   | no       | richer  |    0 |
+| AR         | Argentina                | 2         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| AU         | Australia                | 3         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| BE         | Belgium                  | 1         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| BR         | Brazil                   | 2         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| CA         | Canada                   | 2         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| CH         | Switzerland              | 1         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| CN         | China                    | 3         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| DE         | Germany                  | 1         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| DK         | Denmark                  | 1         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| EG         | Egypt                    | 4         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| FR         | France                   | 1         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| IL         | Israel                   | 4         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| IN         | India                    | 3         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| IT         | Italy                    | 1         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| JP         | Japan                    | 3         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| KW         | Kuwait                   | 4         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| ML         | Malaysia                 | 3         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| MX         | Mexico                   | 2         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| NG         | Nigeria                  | 4         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| NL         | Netherlands              | 1         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| SG         | Singapore                | 3         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| UK         | United Kingdom           | 1         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| US         | United States of America | 2         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| ZM         | Zambia                   | 4         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
+| ZW         | Zimbabwe                 | 4         | NULL |    0 |    3 | lxy  | 1    | 300   | kouhong | no       | thinner |    0 |
++------------+--------------------------+-----------+------+------+------+------+------+-------+---------+----------+---------+------+
+75 rows in set (0.00 sec)
+
+mysql> select from * countries where countries. isok in(select isok from shopping);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from * countries where countries. isok in(select isok from shopping)' at line 1
+mysql> select from * countries where countries.isok in(select isok from shopping);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from * countries where countries.isok in(select isok from shopping)' at line 1
+mysql> select * from countries where countries.isok in(select isok from shopping);
++------------+--------------------------+-----------+------+------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID | num  | isok |
++------------+--------------------------+-----------+------+------+
+| AR         | Argentina                | 2         | NULL |    0 |
+| AU         | Australia                | 3         | NULL |    0 |
+| BE         | Belgium                  | 1         | NULL |    0 |
+| BR         | Brazil                   | 2         | NULL |    0 |
+| CA         | Canada                   | 2         | NULL |    0 |
+| CH         | Switzerland              | 1         | NULL |    0 |
+| CN         | China                    | 3         | NULL |    0 |
+| DE         | Germany                  | 1         | NULL |    0 |
+| DK         | Denmark                  | 1         | NULL |    0 |
+| EG         | Egypt                    | 4         | NULL |    0 |
+| FR         | France                   | 1         | NULL |    0 |
+| IL         | Israel                   | 4         | NULL |    0 |
+| IN         | India                    | 3         | NULL |    0 |
+| IT         | Italy                    | 1         | NULL |    0 |
+| JP         | Japan                    | 3         | NULL |    0 |
+| KW         | Kuwait                   | 4         | NULL |    0 |
+| ML         | Malaysia                 | 3         | NULL |    0 |
+| MX         | Mexico                   | 2         | NULL |    0 |
+| NG         | Nigeria                  | 4         | NULL |    0 |
+| NL         | Netherlands              | 1         | NULL |    0 |
+| SG         | Singapore                | 3         | NULL |    0 |
+| UK         | United Kingdom           | 1         | NULL |    0 |
+| US         | United States of America | 2         | NULL |    0 |
+| ZM         | Zambia                   | 4         | NULL |    0 |
+| ZW         | Zimbabwe                 | 4         | NULL |    0 |
++------------+--------------------------+-----------+------+------+
+25 rows in set (0.00 sec)
+
+mysql> select * from countries union all select isok from shopping;
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+mysql> select isok from countries union all select isok from shopping;
++------+
+| isok |
++------+
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
+|    0 |
++------+
+28 rows in set (0.00 sec)
+
+mysql>
