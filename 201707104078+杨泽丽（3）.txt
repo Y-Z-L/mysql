@@ -1,0 +1,87 @@
+Microsoft Windows [版本 10.0.17134.345]
+(c) 2018 Microsoft Corporation。保留所有权利。
+
+C:\WINDOWS\system32>net start mysql80
+请求的服务已经启动。
+
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\WINDOWS\system32>mysql -u root -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 81
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use list;
+Database changed
+mysql> create table shoppinglist(id int primary key auto_increment unique,
+    -> name varchar(10),
+    -> num varchar(10),
+    -> enjoy varchar(10));
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> desc shoppinglist;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(10) | YES  |     | NULL    |                |
+| num   | varchar(10) | YES  |     | NULL    |                |
+| enjoy | varchar(10) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> insert into shoppinglist values (1,'clothes',2,'yes'),
+    -> (2,'shoes',1,'so so');
+Query OK, 2 rows affected (0.09 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+
+mysql> insert into shoppinglist values (3,'kouhong',3,'yes');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from shoppinglist;
++----+---------+------+-------+
+| id | name    | num  | enjoy |
++----+---------+------+-------+
+|  1 | clothes | 2    | yes   |
+|  2 | shoes   | 1    | so so |
+|  3 | kouhong | 3    | yes   |
++----+---------+------+-------+
+
+mysql> alter table shoppinglist add isdelete int(1) default 0;
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from shoppinglist;
++----+---------+------+-------+----------+
+| id | name    | num  | enjoy | isdelete |
++----+---------+------+-------+----------+
+|  1 | clothes | 2    | yes   |        0 |
+|  2 | shoes   | 1    | so so |        0 |
+|  3 | kouhong | 3    | yes   |        0 |
++----+---------+------+-------+----------+
+3 rows in set (0.00 sec)
+
+mysql> update shoppinglist set isdelete=1 where id=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shoppinglist;
++----+---------+------+-------+----------+
+| id | name    | num  | enjoy | isdelete |
++----+---------+------+-------+----------+
+|  1 | clothes | 2    | yes   |        1 |
+|  2 | shoes   | 1    | so so |        0 |
+|  3 | kouhong | 3    | yes   |        0 |
++----+---------+------+-------+----------+
+3 rows in set (0.00 sec)
