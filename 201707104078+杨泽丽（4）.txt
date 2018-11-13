@@ -1,0 +1,108 @@
+Microsoft Windows [版本 10.0.17134.345]
+(c) 2018 Microsoft Corporation。保留所有权利。
+
+C:\WINDOWS\system32>net start mysql80
+请求的服务已经启动。
+
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\WINDOWS\system32>mysql -u root -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 81
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database yzl charset=utf8;
+Query OK, 1 row affected, 1 warning (0.07 sec)
+
+mysql> use yzl;
+Database changed
+
+mysql> create table movie(id int auto_increment primary key,
+    -> name varchar(10),
+    -> year varchar(4),
+    -> director varchar(10),
+    -> pingfen varchar(4));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into movie (id,name,year,director,pingfen) values
+    -> (1,'clzjxs','2012','huasen','8.9'),
+    -> (2,'dwsj','2018','hanyan','8.6'),
+    -> (3,'jrayty','2003','guozairong','9.0'),
+    -> (4,'sxs','2015','nanxi','8.6'),
+    -> (5,'prxd','2010','luobo','9.3');
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from movie;
++----+--------+------+------------+---------+
+| id | name   | year | director   | pingfen |
++----+--------+------+------------+---------+
+|  1 | clzjxs | 2012 | huasen     | 8.9     |
+|  2 | dwsj   | 2018 | hanyan     | 8.6     |
+|  3 | jrayty | 2003 | guozairong | 9.0     |
+|  4 | sxs    | 2015 | nanxi      | 8.6     |
+|  5 | prxd   | 2010 | luobo      | 9.3     |
++----+--------+------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from movie where name like '%zj%';
++----+--------+------+----------+---------+
+| id | name   | year | director | pingfen |
++----+--------+------+----------+---------+
+|  1 | clzjxs | 2012 | huasen   | 8.9     |
++----+--------+------+----------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from movie where director like '%zai%';
++----+--------+------+------------+---------+
+| id | name   | year | director   | pingfen |
++----+--------+------+------------+---------+
+|  3 | jrayty | 2003 | guozairong | 9.0     |
++----+--------+------+------------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from movie where year=2018;
++----+------+------+----------+---------+
+| id | name | year | director | pingfen |
++----+------+------+----------+---------+
+|  2 | dwsj | 2018 | hanyan   | 8.6     |
++----+------+------+----------+---------+
+1 row in set (0.00 sec)
+
+mysql> select max(pingfen) from movie;
++--------------+
+| max(pingfen) |
++--------------+
+| 9.3          |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select name,max(pingfen) from movie;
++--------+--------------+
+| name   | max(pingfen) |
++--------+--------------+
+| clzjxs | 9.3          |
++--------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select * from movie where pingfen>=8.6;
++----+--------+------+------------+---------+
+| id | name   | year | director   | pingfen |
++----+--------+------+------------+---------+
+|  1 | clzjxs | 2012 | huasen     | 8.9     |
+|  2 | dwsj   | 2018 | hanyan     | 8.6     |
+|  3 | jrayty | 2003 | guozairong | 9.0     |
+|  4 | sxs    | 2015 | nanxi      | 8.6     |
+|  5 | prxd   | 2010 | luobo      | 9.3     |
++----+--------+------+------------+---------+
+5 rows in set (0.03 sec)
